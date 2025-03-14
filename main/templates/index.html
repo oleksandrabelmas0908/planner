@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Main{% endblock %}
+
+{% block content %}
+
+    <div class="container mx-auto mt-6 p-4">
+        <div class="grid grid-cols-1 gap-4">
+             <div class="bg-gray-700 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold mb-3">To-Do List</h2>
+                <ul class="space-y-2">
+                    <li class="bg-gray-500 p-3 rounded flex items-center justify-between">
+                        <div class="grid grid-cols-2 gap-12">
+                            <span>Task 1</span>
+                            <span class="text-gray-300">30 min</span>
+                        </div>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Complete</button>
+                    </li>
+                    <li class="bg-gray-500 p-3 rounded flex items-center justify-between">
+                        <div class="grid grid-cols-2 gap-12">
+                            <span>Сходити в магазин</span>
+                            <span class="text-gray-300">45 min</span>
+                        </div>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Complete</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold mb-3">Completed</h2>
+                <ul class="space-y-2">
+                    <li class="bg-gray-500 p-3 rounded flex justify-between items-center">
+                        <div class="grid grid-cols-2 gap-12">
+                            <span class="line-through">Task A</span>
+                            <span class="text-gray-300">20 min</span>
+                        </div>
+                    </li>
+                    <li class="bg-gray-500 p-3 rounded flex justify-between items-center">
+                        <div class="grid grid-cols-2 gap-12">
+                            <span class="line-through">Task A</span>
+                            <span class="text-gray-300">20 min</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
