@@ -5,7 +5,7 @@
 {% block content %}
 
     <div class="container mx-auto mt-6 p-4">
-        <div class="grid grid-cols-1 gap-4">
+        <div id="todo-list" class="grid grid-cols-1 gap-4">
              <div class="bg-gray-700 p-4 rounded-lg">
                 <h2 class="text-xl font-semibold mb-3">To-Do List</h2>
                 <ul class="space-y-2">
@@ -14,19 +14,19 @@
                             <span>Task 1</span>
                             <span class="text-gray-300">30 min</span>
                         </div>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Complete</button>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded" onclick="moveTask(this)">Complete</button>
                     </li>
                     <li class="bg-gray-500 p-3 rounded flex items-center justify-between">
                         <div class="grid grid-cols-2 gap-12">
                             <span>Сходити в магазин</span>
                             <span class="text-gray-300">45 min</span>
                         </div>
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">Complete</button>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded" onclick="moveTask(this)">Complete</button>
                     </li>
                 </ul>
             </div>
 
-            <div class="bg-gray-700 p-4 rounded-lg">
+            <div id="completed-list" class="bg-gray-700 p-4 rounded-lg">
                 <h2 class="text-xl font-semibold mb-3">Completed</h2>
                 <ul class="space-y-2">
                     <li class="bg-gray-500 p-3 rounded flex justify-between items-center">
@@ -45,5 +45,16 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        function moveTask(button) {
+            let task = button.parentElement;
+            button.remove(); // Remove the button
+            task.classList.add("completed");
+            document.getElementById("completed-list").appendChild(task);
+        }
+    </script>
+
 
 {% endblock %}
