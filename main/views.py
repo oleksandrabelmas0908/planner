@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
@@ -43,4 +44,11 @@ def login_view(req):
         return redirect('home')
 
     else:
+        print("fsjkd;l")
         return render(template_name="login.html", request=req)
+
+
+@login_required
+def home(req):
+    user = req.user
+    return render(req, 'home.html', context={user: req.user})
