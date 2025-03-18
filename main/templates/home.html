@@ -1,10 +1,170 @@
+{% load static %}
+{% load ranged %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
+
     <title>Home</title>
+
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
 </head>
-<body>
-hello {{ user.username }}
+
+
+<body class="bg-gray-800 text-white">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+
+    <script>
+    function deleteTask(button) {
+        const taskItem = button.closest(".grid");
+        if (taskItem) {
+            taskItem.remove();
+        }
+    }
+
+
+  function markAsCompleted(button) {
+    let taskElement = button.closest('.relative.grid');
+
+    let statusSpan = taskElement.querySelector('.absolute.right-0 span');
+
+    statusSpan.innerHTML = `
+      <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />
+      </svg>
+      Completed
+    `;
+
+    statusSpan.className = "inline-flex items-center rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300";
+
+    button.disabled = true;
+    button.classList.add('opacity-50', 'cursor-not-allowed');
+    button.textContent = "Completed";
+  }
+    </script>
+
+
+
+
+    <nav class="border-gray-200 bg-gray-900">
+      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Planner</span>
+        </a>
+        <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm  rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto " id="navbar-default">
+          <ul class="font-medium text-center flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 bg-gray-900 md:bg-gray-900 border-gray-700">
+            <li>
+              <a href="{% url 'start' %}" class="block py-2 px-3 bg-blue-700 rounded-sm md:bg-transparent md:p-0 text-white md:text-blue-500" aria-current="page">Home</a>
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-3 bg-blue-700 rounded-sm md:bg-transparent md:p-0 text-white md:text-blue-500" aria-current="page">History</a>
+            </li>
+            <li>
+              <a href="{% url 'login' %}" class="block py-2 px-3 bg-blue-700 rounded-sm md:bg-transparent md:p-0 text-white md:text-blue-500" aria-current="page">Log out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="flex p-8 w-full items-center">
+        <h1 class="text-2xl mx-auto">Hello {{ user.username }}</h1>
+    </div>
+
+    <section class="flex justify-center mb-32 mx-auto w-[60%] max-x-5xl bg-white py-4 dark:bg-gray-900 md:py-8 rounded-2xl shadow-2xl shadow-gray-200/20">
+      <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <div class="mx-auto max-w-5xl">
+          <div class="flex items-center justify-center">
+            <h2 class="font-semibold text-3xl text-gray-900 dark:text-white sm:text-2xl">This week</h2>
+          </div>
+
+          <div class="mt-6 flow-root sm:mt-8">
+            <div class="divide-y divide-gray-200 dark:divide-gray-700">
+
+              {% for i in 9|ranged %}
+              <div class="justify-between relative grid gap-4 py-6 grid-cols-6">
+                <div class="col-span-2 content-center ">
+                  <a href="#" class="text-base font-semibold text-gray-900 hover:underline dark:text-white">Go to the gym {{ i }}</a>
+                </div>
+
+                <div class="content-center">
+                  <div class="flex items-center gap-2">
+                    <svg class="h-4 w-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z" />
+                    </svg>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">22 May 2024</p>
+                  </div>
+                </div>
+
+                <div class="absolute right-0 top-7 content-center sm:relative sm:right-auto sm:top-auto">
+                  <span class="inline-flex items-center rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
+                    <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 4h-13m13 16h-13M8 20v-3.333a2 2 0 0 1 .4-1.2L10 12.6a1 1 0 0 0 0-1.2L8.4 8.533a2 2 0 0 1-.4-1.2V4h8v3.333a2 2 0 0 1-.4 1.2L13.957 11.4a1 1 0 0 0 0 1.2l1.643 2.867a2 2 0 0 1 .4 1.2V20H8Z" />
+                    </svg>
+                    Ongoing
+                  </span>
+                </div>
+
+                <div class="col-span-2 content-center sm:col-span-1 sm:justify-self-end">
+                  <button onclick="markAsCompleted(this)" type="button" class="w-full rounded-lg border border-green-200 bg-green-900 px-3 py-2 text-sm font-medium text-green-300 hover:bg-green-600 hover:text-primary-700  border-green-600 sm:w-auto">Complete</button>
+                </div>
+
+                <button onclick="deleteTask(this)" type="button" class=" inline-flex items-center text-white border border-red-300 bg-red-900 text-red-300 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center justify-center">
+                  <svg  aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>Delete
+                </button>
+              </div>
+              {% endfor %}
+
+
+
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+
+
+
+
+
 </body>
 </html>
+
+
+<!--    <script>-->
+<!--        function markAsCompleted(button) {-->
+<!--            const taskElement = button.closest(".grid");-->
+<!--            if (taskElement) {-->
+<!--                const statusContainer = taskElement.querySelector(".status-container");-->
+<!--                if (statusContainer) {-->
+<!--                    statusContainer.innerHTML = `-->
+<!--                        <span class="inline-flex items-center rounded bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">-->
+<!--                            <svg class="me-1 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">-->
+<!--                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5" />-->
+<!--                            </svg>-->
+<!--                            Completed-->
+<!--                        </span>-->
+<!--                    `;-->
+<!--                }-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
