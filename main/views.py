@@ -54,3 +54,18 @@ def home(req):
     tasks = Tasks.objects.filter(user=req.user)
     print(tasks)
     return render(req, 'home.html', context={"tasks": tasks, "user": req.user})
+
+
+@login_required
+def add_task(req):
+    if req.method == 'POST':
+        task_name = req.POST.get("name")
+        time_it_takes = req.POST.get("time_it_takes")
+        user = req.user
+
+        new_task = Tasks(user=user, title=task_name, time_it_takes=time_it_takes)
+        new_task.save()
+
+        return redirect('home')
+
+    return render(req, 'add_task.html')
