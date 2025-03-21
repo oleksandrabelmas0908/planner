@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
@@ -49,10 +49,30 @@ def login_view(req):
         return render(template_name="login.html", request=req)
 
 
+def logout_view(req):
+    logout(req)
+    return redirect('start')
+
+
 @login_required
 def home(req):
     tasks = Tasks.objects.filter(user=req.user)
-    print(tasks)
+
+    if req.method == 'POST':
+        task_id = req.POST.get("task_id")
+        action = req.POST.get("action")
+
+
+        task = Tasks.objects.get(pk=task_id)
+        if action == 'delete':
+            task.delete()
+
+        elif action == 'complete':
+            task.is_done = True
+            task.save()
+
+        return redirect('home')
+
     return render(req, 'home.html', context={"tasks": tasks, "user": req.user})
 
 
